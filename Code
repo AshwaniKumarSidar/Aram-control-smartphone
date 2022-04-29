@@ -1,0 +1,153 @@
+/*
+
+	This code is for controlling MeArm using 1Sheeld gamepad shield	The Robot is 4 servo motors //link to get fritzing for the robot
+
+	Used arduino uno and 1sheeld
+
+	a_atef45@yahoo.com
+
+	www.zerosnones.net
+
+	+201153300223
+
+*/
+
+// Defining the shield needed only (gamepad), this will save memory
+
+#define CUSTOM_SETTINGS
+
+#define INCLUDE_GAMEPAD_SHIELD
+
+// Include OneSheeld.h and Servo.h for controlling servo's
+
+#include <OneSheeld.h>
+
+#include <Servo.h>
+
+// Making servo objects
+
+Servo base;
+
+Servo shoulder;
+
+Servo elbow;
+
+Servo hand;
+
+// Global varianles for initializing the servo motors positions
+
+int basePos=90;
+
+int shoulderPos=60;
+
+int elbowPos=90;
+
+int handPos=90;
+
+// Setup code runs only one time
+
+void setup()
+
+{
+
+	// Begging the onesheeld
+
+	OneSheeld.begin();
+
+	
+
+	// Attach servo motors
+
+	// Base on 8, shoulder on 9, elbow on 10 and hand on 11
+
+	base.attach(8);
+
+	shoulder.attach(9);
+
+	elbow.attach(10);
+
+	hand.attach(11);
+
+}
+
+// Loop code runs reaptrepeatedly
+
+void loop()
+
+{
+
+	// Controlling base
+
+	// Right moves the base to right and left moves it to left
+
+	if(GamePad.isRightPressed()) {
+
+		basePos-=8;
+
+	} else if(GamePad.isLeftPressed()) {
+
+		basePos+=8;
+
+	}
+
+	// Controlling elbow
+
+	// Up moves the elbow up and down gets it down
+
+	if(GamePad.isUpPressed()) {
+
+		elbowPos+=8;
+
+	} else if(GamePad.isDownPressed()) {
+
+		elbowPos-=8;
+
+	}
+
+	// Controlling shoulder
+
+	// Orange button moves it forward and green moves it backward
+
+	if(GamePad.isOrangePressed()) {
+
+		shoulderPos+=8;
+
+	} else if(GamePad.isGreenPressed()) {
+
+		shoulderPos-=8;
+
+	}
+
+	// Controlling hand
+
+	// Red closes the hand and blue opens it
+
+	if(GamePad.isRedPressed()) {
+
+		handPos+=8;
+
+	} else if(GamePad.isBluePressed()) {
+
+		handPos-=8;
+
+	}
+
+	
+
+	// Move the servo motors to it's new positions
+
+	base.write(basePos);
+
+	shoulder.write(shoulderPos);
+
+	elbow.write(elbowPos);
+
+	hand.write(handPos);
+
+	
+
+	// Delay before run again
+
+	delay(60);
+
+}
